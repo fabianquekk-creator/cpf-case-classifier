@@ -221,7 +221,6 @@ elif page == "About Us":
     For feedback or queries, please contact Fabian directly.
     """)
 
-# ── methodology page ───────────────────────────────────────────────────────────
 elif page == "Methodology":
     st.title("Methodology")
     st.write("""
@@ -260,13 +259,32 @@ elif page == "Methodology":
 
     **Prompt Engineering**
 
-    The system prompt is carefully designed to guide the LLM to classify cases accurately and
-    consistently. Key design decisions include:
+    The system prompt is carefully designed using two complementary techniques to guide the LLM
+    to classify cases accurately and consistently:
+
+    1. Few-Shot Prompting: Real anonymised member appeal cases are included as examples for each
+    category. This helps the LLM understand the nuance and context of each category, particularly
+    for cases that are ambiguous or phrased in unusual ways. The examples were derived from actual
+    member appeals to ensure they are representative of real-world cases.
+
+    2. Keyword Hints: A curated list of keywords and phrases commonly associated with each category
+    is included in the prompt. These keywords were derived from analysis of real member appeals and
+    serve as additional signals to guide the LLM when the case details are brief or unclear. For
+    example, phrases like "did not authorise" or "police report" are strong indicators of an
+    Unauthorised Transfer, while "tax relief" or "IRAS" are strong indicators of a Tax Relief case.
+
+    Combining both techniques improves classification accuracy compared to using either technique
+    alone, as the examples provide contextual understanding while the keywords provide explicit
+    signals for edge cases.
+
+    Other key design decisions include:
     - Clear and unambiguous category definitions to minimise misclassification
     - Explicit instructions to return only the category name, reducing the risk of verbose or
       unexpected outputs
     - Setting the model temperature to 0 to ensure deterministic and consistent classifications
     - Instructions to classify ambiguous cases as "Others" rather than guessing
+    - Explicit rules to distinguish between similar categories, such as Within 30 Days vs
+      Unauthorised Transfer, and Within 30 Days vs Change of Scheme
 
     **Safeguards Against Prompt Injection**
 
@@ -282,7 +300,8 @@ elif page == "Methodology":
 
     As with any AI-powered tool, there are inherent limitations. The LLM may occasionally misclassify
     ambiguous cases, particularly where the distinction between categories is subtle — for example,
-    between Within 30 Days and Change of Scheme. All outputs should therefore be reviewed by a
-    qualified officer before any action is taken. The tool is intended to assist, not replace,
-    human judgement.
+    between Within 30 Days and Change of Scheme. This is consistent with the fact that even human
+    officers may disagree on the classification of such edge cases. All outputs should therefore be
+    reviewed by a qualified officer before any action is taken. The tool is intended to assist, not
+    replace, human judgement.
     """)
