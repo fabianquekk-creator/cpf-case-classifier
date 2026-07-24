@@ -167,6 +167,12 @@ def classify_case(case_details, date_time_opened):
 st.set_page_config(page_title="Case Classifier", layout="wide")
 st.title("CPF Case Classifier")
 
+# ── password protection ────────────────────────────────────────────────────────
+password = st.text_input("Enter password to access the app", type="password")
+if password != "fabian2026":
+    st.warning("Please enter the correct password to continue.")
+    st.stop()
+
 # ── important notice ───────────────────────────────────────────────────────────
 
 st.warning("""
